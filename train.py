@@ -13,6 +13,7 @@ from models.classification_heads import ClassificationHead
 from models.R2D2_embedding import R2D2Embedding
 from models.protonet_embedding import ProtoNetEmbedding
 from models.ResNet12_embedding import resnet12
+from models.odenet import ODENet
 
 from utils import set_gpu, Timer, count_accuracy, check_dir, log, AttackPGD
 
@@ -45,6 +46,8 @@ def get_model(options):
             network = torch.nn.DataParallel(network, device_ids=[0, 1, 2, 3])
         else:
             network = resnet12(avg_pool=False, drop_rate=0.1, dropblock_size=2).cuda()
+    elif options.network == 'OdeNet':
+        network = ODENet()
     else:
         print ("Cannot recognize the network type")
         assert(False)
