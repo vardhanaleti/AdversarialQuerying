@@ -48,6 +48,7 @@ def get_model(options):
             network = resnet12(avg_pool=False, drop_rate=0.1, dropblock_size=2).cuda()
     elif options.network == 'OdeNet':
         network = ODENet()
+        network = network.cuda()
     else:
         print ("Cannot recognize the network type")
         assert(False)
