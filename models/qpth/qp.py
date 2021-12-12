@@ -96,6 +96,7 @@ class QPFunction(Function):
         self.neq, self.nineq, self.nz = neq, nineq, nz
 
         if self.solver == QPSolvers.PDIPM_BATCHED:
+            print("matrix",Q)
             self.Q_LU, self.S_LU, self.R = pdipm_b.pre_factor_kkt(Q, G, A)
             zhats, self.nus, self.lams, self.slacks = pdipm_b.forward(
                 Q, p, G, h, A, b, self.Q_LU, self.S_LU, self.R,
