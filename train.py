@@ -14,8 +14,13 @@ from models.R2D2_embedding import R2D2Embedding
 from models.protonet_embedding import ProtoNetEmbedding
 from models.ResNet12_embedding import resnet12
 from models.odenet import ODENet
+import warnings
+
+
 
 from utils import set_gpu, Timer, count_accuracy, check_dir, log, AttackPGD
+
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 def one_hot(indices, depth):
     """
