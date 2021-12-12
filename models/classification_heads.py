@@ -99,6 +99,7 @@ def MetaOptNetHead_Ridge(query, support, support_labels, n_way, n_shot, lambda_r
     kernel_matrix += lambda_reg * torch.eye(n_support).expand(tasks_per_batch, n_support, n_support).cuda()
 
     block_kernel_matrix = kernel_matrix.repeat(n_way, 1, 1) #(n_way * tasks_per_batch, n_support, n_support)
+    block_kernel_matrix += 1.0 * torch.eye(n_support).expand(n_way * tasks_per_batch, n_support, n_support).cuda()
     
     support_labels_one_hot = one_hot(support_labels.view(tasks_per_batch * n_support), n_way) # (tasks_per_batch * n_support, n_way)
     support_labels_one_hot = support_labels_one_hot.transpose(0, 1) # (n_way, tasks_per_batch * n_support)
