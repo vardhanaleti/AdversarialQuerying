@@ -36,14 +36,14 @@ class QPFunction(Function):
         matrix" (1988): https://doi.org/10.1016/0024-3795(88)90223-6
         """
 
-        B = (A + A.transpose()) / 2
+        B = (A +torch.transpose(A, 0, 1)) / 2
         _, s, V = la.svd(B)
 
         H = np.dot(V.T, np.dot(np.diag(s), V))
 
         A2 = (B + H) / 2
 
-        A3 = (A2 + A2.transpose()) / 2
+        A3 = (A2 +torch.transpose(A2, 0, 1))/ 2
 
         if self.isPD(A3):
             return A3
