@@ -43,7 +43,7 @@ class QPFunction(Function):
 
         A2 = (B + H) / 2
 
-        A3 = (A2 + A2.T) / 2
+        A3 = (A2 + A2.transpose()) / 2
 
         if self.isPD(A3):
             return A3
