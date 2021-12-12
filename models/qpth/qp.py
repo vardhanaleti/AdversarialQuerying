@@ -74,7 +74,7 @@ class QPFunction(Function):
             _ = la.cholesky(B)
             return True
         except la.LinAlgError:
-        return False
+            return False
 
     def forward(self, Q_, p_, G_, h_, A_, b_):
         """Solve a batch of QPs.
