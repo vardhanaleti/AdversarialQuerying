@@ -36,7 +36,7 @@ class QPFunction(Function):
         matrix" (1988): https://doi.org/10.1016/0024-3795(88)90223-6
         """
 
-        B = (A + A.T) / 2
+        B = (A + A.transpose()) / 2
         _, s, V = la.svd(B)
 
         H = np.dot(V.T, np.dot(np.diag(s), V))
