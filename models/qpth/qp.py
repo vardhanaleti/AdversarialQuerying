@@ -27,7 +27,7 @@ class QPFunction(Function):
         self.solver = solver
         self.check_Q_spd = check_Q_spd
         
-    def nearestPD(A):
+    def nearestPD(self,A):
         """Find the nearest positive-definite matrix to input
         A Python/Numpy port of John D'Errico's `nearestSPD` MATLAB code [1], which
         credits [2].
@@ -45,7 +45,7 @@ class QPFunction(Function):
 
         A3 = (A2 + A2.T) / 2
 
-        if isPD(A3):
+        if self.isPD(A3):
             return A3
 
         spacing = np.spacing(la.norm(A))
@@ -68,7 +68,7 @@ class QPFunction(Function):
         return A3
 
 
-    def isPD(B):
+    def isPD(self,B):
         """Returns true when input is positive-definite, via Cholesky"""
         try:
             _ = la.cholesky(B)
@@ -147,7 +147,7 @@ class QPFunction(Function):
 
         if self.solver == QPSolvers.PDIPM_BATCHED:
             print("matrix",Q)
-            Q = nearestPD(Q)
+            Q = self.nearestPD(Q)
             self.Q_LU, self.S_LU, self.R = pdipm_b.pre_factor_kkt(Q, G, A)
             zhats, self.nus, self.lams, self.slacks = pdipm_b.forward(
                 Q, p, G, h, A, b, self.Q_LU, self.S_LU, self.R,
