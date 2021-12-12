@@ -28,14 +28,17 @@ class QPFunction(Function):
 
     def forward(self, Q_, p_, G_, h_, A_, b_):
         """Solve a batch of QPs.
+
         This function solves a batch of QPs, each optimizing over
         `nz` variables and having `nineq` inequality constraints
         and `neq` equality constraints.
         The optimization problem for each instance in the batch
         (dropping indexing from the notation) is of the form
+
             \hat z =   argmin_z 1/2 z^T Q z + p^T z
                      subject to Gz <= h
                                 Az  = b
+
         where Q \in S^{nz,nz},
               S^{nz,nz} is the set of all positive semi-definite matrices,
               p \in R^{nz}
@@ -43,20 +46,26 @@ class QPFunction(Function):
               h \in R^{nineq}
               A \in R^{neq,nz}
               b \in R^{neq}
+
         These parameters should all be passed to this function as
         Variable- or Parameter-wrapped Tensors.
         (See torch.autograd.Variable and torch.nn.parameter.Parameter)
+
         If you want to solve a batch of QPs where `nz`, `nineq` and `neq`
         are the same, but some of the contents differ across the
         minibatch, you can pass in tensors in the standard way
         where the first dimension indicates the batch example.
         This can be done with some or all of the coefficients.
+
         You do not need to add an extra dimension to coefficients
         that will not change across all of the minibatch examples.
         This function is able to infer such cases.
+
         If you don't want to use any equality or inequality constraints,
         you can set the appropriate values to:
+
             e = Variable(torch.Tensor())
+
         Parameters:
           Q:  A (nBatch, nz, nz) or (nz, nz) Tensor.
           p:  A (nBatch, nz) or (nz) Tensor.
@@ -64,6 +73,7 @@ class QPFunction(Function):
           h:  A (nBatch, nineq) or (nineq) Tensor.
           A:  A (nBatch, neq, nz) or (neq, nz) Tensor.
           b:  A (nBatch, neq) or (neq) Tensor.
+
         Returns: \hat z: a (nBatch, nz) Tensor.
         """
         nBatch = extract_nBatch(Q_, p_, G_, h_, A_, b_)
